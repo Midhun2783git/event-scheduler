@@ -7,19 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id       String  @id @default(uuid())
-  name     String?
-  email    String  @unique
-  password String
-  events   Event[]
+model Event {
+  id             String   @id @default(uuid())
+  fromDate       DateTime
+  toDate         DateTime
+  companyName    String
+  companyAddress String?
+  city           String?
+  country        String?
+  task           String?
+  asmeId         String?
+  asmeApp        String?
+  aia            String?
+  hotelName      String?
+  airportName    String?
+  completed      Boolean  @default(false)
+  createdAt      DateTime @default(now())
 }
 
-model Event {
-  id        String   @id @default(uuid())
-  title     String
-  date      DateTime
-  location  String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-}
