@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import type { RouteHandlerContext } from 'next/dist/server/web/types'; // This is key
 import prisma from '@/lib/db';
 
 export async function PATCH(
   req: NextRequest,
-  context: RouteHandlerContext
+  { params }: { params: { id: string } } // ✅ Valid and supported
 ) {
   try {
-    const { id } = context.params;
     const { completed } = await req.json();
 
     const updated = await prisma.event.update({
-      where: { id },
+      where: { id: params.id },
       data: { completed },
     });
 
