@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { RouteHandlerContext } from 'next/dist/server/web/types'; // This is key
 import prisma from '@/lib/db';
 
-// Use the official type from Next.js for the second argument
 export async function PATCH(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: RouteHandlerContext
 ) {
   try {
     const { id } = context.params;
@@ -15,7 +15,7 @@ export async function PATCH(
       data: { completed },
     });
 
-    return NextResponse.json(updated);
+    return NextResponse.json(updated, { status: 200 });
   } catch (error) {
     console.error('PATCH /api/events/[id] failed:', error);
     return NextResponse.json(
