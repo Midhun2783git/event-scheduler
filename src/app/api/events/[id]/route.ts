@@ -1,21 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 
+// Use the official type from Next.js for the second argument
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: Record<string, string> }
+  context: { params: { id: string } }
 ) {
   try {
+    const { id } = context.params;
     const { completed } = await req.json();
 
     const updated = await prisma.event.update({
-      where: { id: params.id },
+      where: { id },
       data: { completed },
     });
 
-    return NextResponse.json(updated, { status: 200 });
+    return NextResponse.json(updated);
   } catch (error) {
-    console.error('Error updating event:', error);
+    console.error('PATCH /api/events/[id] failed:', error);
     return NextResponse.json(
       { error: 'Failed to update event' },
       { status: 500 }
