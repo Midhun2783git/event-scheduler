@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function POST(_req: NextRequest) {
+export async function POST() {
   try {
     const body = await req.json();
 
