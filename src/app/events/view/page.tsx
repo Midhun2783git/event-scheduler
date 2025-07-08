@@ -48,10 +48,23 @@ type Event = {
 export default function AllEventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
 
+  // useEffect(() => {
+  //   fetch('/api/events')
+  //     .then(res => res.json())
+  //     .then(setEvents);
+  // }, []);
   useEffect(() => {
     fetch('/api/events')
-      .then(res => res.json())
-      .then(setEvents);
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`❌ Failed to fetch events: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(setEvents)
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   const toggleCompletion = async (id: string, completed: boolean) => {

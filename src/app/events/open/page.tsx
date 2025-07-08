@@ -56,10 +56,24 @@ type Event = {
 export default function OpenEventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
 
+  // useEffect(() => {
+  //   fetch('/api/events')
+  //     .then(res => res.json())
+  //     .then(data => setEvents(data.filter((e: Event) => !e.completed))); // ✅ Only incomplete
+  // }, []);
+
   useEffect(() => {
     fetch('/api/events')
-      .then(res => res.json())
-      .then(data => setEvents(data.filter((e: Event) => !e.completed))); // ✅ Only incomplete
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`❌ Failed to fetch events: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => setEvents(data.filter((e: Event) => !e.completed))) // ✅ Only incomplete
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   return (

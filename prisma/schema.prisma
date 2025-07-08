@@ -12,15 +12,15 @@ model Event {
   fromDate       DateTime
   toDate         DateTime
   companyName    String
-  companyAddress String?
-  city           String?
-  country        String?
-  task           String?
-  asmeId         String?
-  asmeApp        String?
-  aia            String?
-  hotelName      String?
-  airportName    String?
+  companyAddress String
+  city           String
+  country        String
+  task           String
+  asmeId         String
+  asmeApp        String
+  aia            String
+  hotelName      String
+  airportName    String
   completed      Boolean  @default(false)
   createdAt      DateTime @default(now())
 }
