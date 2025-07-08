@@ -70,7 +70,7 @@ export default function ClosedEventsPage() {
         }
         return res.json();
       })
-      .then(data => setEvents(data.filter((e: Event) => e.completed))) // ✅ Only incomplete
+      .then(data => setEvents(data.filter((e: Event) => e.completed))) // ✅ Only complete
       .catch((err) => {
         console.error(err);
       });
